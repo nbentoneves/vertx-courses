@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 public class WebSockerHandler implements Handler<ServerWebSocket> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MainVerticle.class);
-  private static final String PATH = "/ws/simple/prices";
+  public static final String PATH = "/ws/simple/prices";
   private final PriceBroadcast broadcast;
 
   public WebSockerHandler(final PriceBroadcast priceBroadcast) {
