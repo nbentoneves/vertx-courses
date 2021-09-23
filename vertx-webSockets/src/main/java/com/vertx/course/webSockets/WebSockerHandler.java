@@ -9,6 +9,11 @@ public class WebSockerHandler implements Handler<ServerWebSocket> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MainVerticle.class);
   private static final String PATH = "/ws/simple/prices";
+  private final PriceBroadcast broadcast;
+
+  public WebSockerHandler(final PriceBroadcast priceBroadcast) {
+    this.broadcast = priceBroadcast;
+  }
 
   @Override
   public void handle(final ServerWebSocket serverWebSocket) {
@@ -33,9 +38,13 @@ public class WebSockerHandler implements Handler<ServerWebSocket> {
           serverWebSocket.writeTextMessage("Not supported => (" + message + ")");
         }
       });
-      serverWebSocket.endHandler(onClose -> LOGGER.info("Closed {}", serverWebSocket.textHandlerID()));
+      serverWebSocket.endHandler(onClose -> {
+        LOGGER.info("Closed {}", serverWebSocket.textHandlerID());
+        this.broadcast.unregister(serverWebSocket);
+      });
       serverWebSocket.exceptionHandler(error -> LOGGER.error("Failed: ", error));
       serverWebSocket.writeTextMessage("Connected!");
+      this.broadcast.register(serverWebSocket);
     }
   }
 }
