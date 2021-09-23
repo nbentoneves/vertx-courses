@@ -20,7 +20,7 @@
     <logback.version>1.2.5</logback.version>
     <junit-jupiter.version>5.7.0</junit-jupiter.version>
 
-    <main.verticle>com.vertx.course.web_sockets.vertx_webSockets.MainVerticle</main.verticle>
+    <main.verticle>com.vertx.course.webSockets.MainVerticle</main.verticle>
     <launcher.class>io.vertx.core.Launcher</launcher.class>
   </properties>
 
